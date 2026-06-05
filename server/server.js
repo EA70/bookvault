@@ -5,7 +5,10 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors({
-  origin: true, // Autorise localhost ET ton IP locale automatiquement ? Attention  en production, il faudra restreindre ça à ton domaine officiel !  
+   origin: [
+    "http://localhost:5174",
+    process.env.CLIENT_URL
+  ],  
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
