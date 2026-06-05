@@ -20,7 +20,8 @@ Vue d'ensemble de l'historique global des transactions par utilisateur.
 Module d'extraction de données permettant de générer des rapports d'activité au format PDF.
 
 
--Architecture Technique
+Architecture Technique
+
 L'application repose sur une architecture découplée permettant une maintenance indépendante du client et du serveur :
 Frontend : Développé avec React.js et structuré graphiquement via Tailwind CSS. L'iconographie est prise en charge par la bibliothèque Lucide React, et les communications avec l'API sont gérées par Axios.
 Backend : API REST assurant la persistance des données et la logique métier.
