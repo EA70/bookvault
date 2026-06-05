@@ -20,7 +20,7 @@ const getRandomBooks = async (req, res) => {
     res.status(200).json(result.rows);
   } catch (err) {
     console.error("Erreur dans getRandomBooks :", err.message);
-    res.status(500).json({ message: "Erreur serveur lors de la recuperation des livres." });
+    res.status(500).json({ message: "Erreur serveur lors de la recuperation des livres,,,," });
   }
 };
 
