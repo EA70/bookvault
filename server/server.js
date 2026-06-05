@@ -4,15 +4,19 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+
+const allowedOrigins = [
+  "http://localhost:5174",
+  process.env.CLIENT_URL
+].filter(Boolean);
+
 app.use(cors({
-   origin: [
-    "http://localhost:5174",
-    process.env.CLIENT_URL
-  ],  
+   origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 app.use(express.json());
 
 // Indispensable en production pour récupérer la vraie adresse IP de l'utilisateur
