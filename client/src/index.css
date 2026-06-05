@@ -1,0 +1,14 @@
+@import "tailwindcss";
+ 
+ 
+/* 1. On ré-importe la police au cas où */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap');
+
+/* 2. On crée une classe CSS pure qui force l'application avec !important */
+.font-satoshi {
+  font-family: 'Satoshi', sans-serif !important;
+}
+
+body, html, #root {
+    font-family: 'Satoshi', sans-serif !important;
+  }

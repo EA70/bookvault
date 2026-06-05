@@ -1,0 +1,18 @@
+#.gitignore pour BuchVault
+
+# Dependances 
+node_modules/
+jspm_packages/
+web_modules/
+
+# Securite & Environnement 
+.env
+.env.local
+.env.*.local
+.sql
+
+# Dossiers des outils de developpement / IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
