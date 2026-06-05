@@ -11,12 +11,13 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-   origin: allowedOrigins,
+  origin: allowedOrigins,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
+app.options('*', cors());
 app.use(express.json());
 
 // Indispensable en production pour récupérer la vraie adresse IP de l'utilisateur
