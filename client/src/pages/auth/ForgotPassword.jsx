@@ -17,6 +17,11 @@ export default function ForgotPassword() {
     try {
       const response = await api.post("/forgot-password", { email });
       setMessage(response.data.message);
+
+      setTimeout(() => {
+        navigate("/login");  
+      }, 3000);
+      
     } catch (err) {
       setError(err.response?.data?.message || "Une erreur est survenue.");
     } finally {
@@ -25,8 +30,8 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 font-manrope">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center px-4 font-manrope">
+      <div className="max-w-md w-full bg-white p-8 rounded shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-2 font-satoshi">Mot de passe oublié</h2>
         <p className="text-sm text-gray-500 text-center mb-6">Saisissez votre adresse email pour recevoir un lien de réinitialisation.</p>
 

@@ -6,18 +6,17 @@ const app = express();
 
 
 const allowedOrigins = [
-  "http://localhost:5174",
+  "http://localhost:5174", "https://bookvault-two.vercel.app/",
   process.env.CLIENT_URL
 ].filter(Boolean);
 
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.options('*', cors());
 app.use(express.json());
 
 // Indispensable en production pour récupérer la vraie adresse IP de l'utilisateur

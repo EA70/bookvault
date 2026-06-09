@@ -44,8 +44,8 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 font-manrope">
-      <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white p-8 rounded shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-6 font-satoshi">Nouveau mot de passe</h2>
 
         {message && <div className="p-4 mb-4 text-sm text-emerald-700 bg-emerald-50 rounded-lg border border-emerald-200">{message}</div>}

@@ -27,7 +27,7 @@ api.interceptors.response.use(
     // IMPORTANT:
     // - 401 = non authentifié / token manquant / session expirée -> on déconnecte
     // - 403 = interdit (ex: route étudiant appelée par un admin) -> ne PAS déconnecter automatiquement
-    if (!isVerifyRoute && !isAuthRoute && error.response && error.response.status === 401) {
+    if (!isAuthRoute && error.response && error.response.status === 401) {
       console.warn("Session expirée ou invalide (401). Nettoyage du stockage et redirection...");
       localStorage.removeItem("token");
       window.location.href = "/login";
