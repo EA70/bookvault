@@ -120,7 +120,7 @@ export default function Book() {
 
   return (
     <div className="min-h-screen p-4 sm:p-8 font-manrope">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <BookHeader
           cartCount={cart.length}
           onOpenCart={() => setIsCartOpen(true)}

@@ -17,6 +17,8 @@ import UserLoansHistory from "../pages/users/UserLoansHistory";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
 import Contact from "../components/Contact";
+import ListeLoans from "../pages/admin/components/AutresLites/ListeLoans";
+import ListeRetard from "../pages/admin/components/AutresLites/ListeRetard";
 
 /**
  * ROUTES PUBLIQUES GLOBALES
@@ -64,4 +66,6 @@ export const adminRoutes = [
   { path: "/putulu-admin/books", element: <BooksAction /> },
   { path: "/putulu-admin/students", element: <Users /> },
   { path: "/putulu-admin/demandes/livres", element: <RequeteDemande /> },
+  { path: "/putulu-admin/loans", element: <ListeLoans /> },
+  { path: "/putulu-admin/overdue-returns", element: <ListeRetard /> },
 ];

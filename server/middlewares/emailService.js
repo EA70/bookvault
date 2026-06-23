@@ -59,7 +59,8 @@ const transporter = nodemailer.createTransport({
 };
 
 
-/**** 
+
+/**  
  * fonction pour envoyer le mail de réinitialisation de mot de passe à l'étudiant
  */
 const sendResetPasswordEmail = async (studentEmail, resetLink) => {
@@ -98,4 +99,38 @@ const sendResetPasswordEmail = async (studentEmail, resetLink) => {
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = { sendVerificationEmail, sendResetPasswordEmail };
+
+
+
+/**  
+ * Mail de rappel pour les retours en retard
+ */
+const sendOverdueReminder = async (to, studentName, bookTitle, dueDate) => {
+  const mailOptions = {
+    from: `"Le Service des Prêts" <${process.env.SMTP_USER}>`,
+    to: to,
+    subject: "[BuchVault] Rappel de restitution d'ouvrage - Bibliothèque Universitaire",
+    html: `
+      <div style="font-family: sans-serif; padding: 20px; color: #334155; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; rounded: 4px;">
+        <h2 style="color: #0f172a; margin-top: 0;">Rappel de restitution d'ouvrage</h2>
+        <p>Bonjour <strong>${studentName}</strong>,</p>
+        <p>Sauf erreur de notre part, le délai d'emprunt pour l'ouvrage suivant est dépassé :</p>
+        <ul style="background-color: #f8fafc; padding: 15px 15px 15px 35px; border-left: 4px solid #ef4444; list-style-type: none; margin: 20px 0;">
+          <li style="margin-bottom: 5px;"><strong>Titre :</strong> ${bookTitle}</li>
+          <li><strong>Date d'échéance attendue :</strong> ${dueDate}</li>
+        </ul>
+        <p>Nous vous invitons à restituer ce livre ou à vous présenter au guichet de la Bibliothèque (Bâtiment A) dans les plus brefs délais afin d'éviter la suspension temporaire de vos droits d'emprunt.</p>
+        <p style="font-size: 12px; color: #94a3b8; margin-top: 30px; border-top: 1px solid #e2e8f0; pt: 15px;">
+          Si vous avez déjà retourné cet ouvrage ou initié une demande de retour sur votre espace BuchVault, veuillez ignorer ce message.
+        </p>
+        <p style="font-size: 13px; font-weight: bold; margin-top: 15px; color: #475569;">
+          Le Service des Prêts — Bibliothèque Universitaire
+        </p>
+      </div>
+    `,
+  };
+
+  return await transporter.sendMail(mailOptions);
+};
+
+module.exports = { sendVerificationEmail, sendResetPasswordEmail, sendOverdueReminder };

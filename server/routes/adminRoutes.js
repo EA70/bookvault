@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { alleUsers, getDashboardKPIs, getDashboardChartsData, getDashboardActionLists, getDashboardQuickActivity, getPendingReservations, acceptReservation, rejectReservation, getDashboardStockAlerts, getBorrowsHistory } = require("../controllers/adminController");
+const { alleUsers, getDashboardKPIs, getDashboardChartsData, getDashboardActionLists, getDashboardQuickActivity, getPendingReservations, acceptReservation, rejectReservation, getDashboardStockAlerts, getBorrowsHistory, getAllActiveLoans, getAllOverdueLoans } = require("../controllers/adminController");
 const { verifyUserOrAdmin, verifyAdmin } = require("../middlewares/auth");
+const {remindStudentManual}  = require("../controllers/borrowController");
 
 
 /**  
@@ -69,6 +70,12 @@ router.get("/dashboard/stock-alerts", verifyAdmin, getDashboardStockAlerts);
 router.get("/borrows/history/", verifyAdmin, getBorrowsHistory);
 
 
+router.get("/loans/active", verifyAdmin, getAllActiveLoans);
+router.get("/loans/overdue", verifyAdmin, getAllOverdueLoans);
+
+
+// lien d envoi de mail de relance pour le retard de depot des livres
+router.post("/remind",verifyAdmin, remindStudentManual);
 
 
 

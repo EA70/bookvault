@@ -1,6 +1,6 @@
 
 const pool = require("../config/connexionDB");
-
+const { sendOverdueReminder } = require("../middlewares/emailService.js");
 
  
 /** * Valide le panier d'emprunt (Ajout de plusieurs emprunts d'un coup)
@@ -433,6 +433,81 @@ const handleBorrowDecision = async (req, res) => {
 };
 
 
+
+
+// controleur d envoye de mail de relance pour les retards de retour
+const remindStudentManual = async (req, res) => {
+  const { borrowId } = req.body;
+
+  // Validation de sécurité de l'entrée
+  if (!borrowId) {
+    return res.status(400).json({ message: "L'identifiant de l'emprunt (borrowId) est requis." });
+  }
+
+  try {
+    // 1. Récupération des informations nécessaires à l'e-mail
+    const loanQuery = await pool.query(`
+      SELECT 
+        b.id AS borrow_id,
+        u.email,
+        u.first_name || ' ' || u.last_name AS student_name,
+        bk.title AS book_title,
+        b.due_at,
+        b.last_reminded_at
+      FROM borrows b
+      JOIN users u ON b.user_id = u.id
+      JOIN books bk ON b.book_id = bk.id
+      WHERE b.id = $1 AND b.status = 'emprunte'
+    `, [borrowId]);
+
+    if (loanQuery.rows.length === 0) {
+      return res.status(404).json({ 
+        message: "Emprunt en retard introuvable ou déjà restitué." 
+      });
+    }
+
+    const loan = loanQuery.rows[0];
+
+    // 2. Sécurité anti-spam : Vérification de la règle des 24 heures
+    if (loan.last_reminded_at) {
+      const hoursSinceLastReminder = (new Date() - new Date(loan.last_reminded_at)) / (1000 * 60 * 60);
+      if (hoursSinceLastReminder < 24) {
+        return res.status(429).json({ 
+          message: "Une relance a déjà été envoyée à cet étudiant il y a moins de 24 heures." 
+        });
+      }
+    }
+
+    // 3. Formatage de la date pour le modèle de mail HTML
+    const formattedDueDate = new Date(loan.due_at).toLocaleDateString("fr-FR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+    // 4. Envoi effectif de l'e-mail via le service SMTP
+    await sendOverdueReminder(loan.email, loan.student_name, loan.book_title, formattedDueDate);
+
+    // 5. Mise à jour de l'horodatage en base de données
+    await pool.query(`
+      UPDATE borrows 
+      SET last_reminded_at = CURRENT_TIMESTAMP 
+      WHERE id = $1
+    `, [borrowId]);
+
+    return res.status(200).json({ 
+      message: "L'e-mail de relance a été envoyé avec succès.",
+      lastRemindedAt: new Date()
+    });
+
+  } catch (error) {
+    console.error("Erreur dans le contrôleur de relance manuelle :", error);
+    return res.status(500).json({ 
+      message: "Une erreur technique est survenue lors de l'envoi de la relance." 
+    });
+  }
+};
+
 module.exports = { 
   getPendingBorrows, 
   validateCartEmprunt,
@@ -440,4 +515,5 @@ module.exports = {
   handleBorrowDecision,
   requestReturn,
   handleReturnDecision,
+  remindStudentManual,
 };

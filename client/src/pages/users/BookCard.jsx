@@ -43,9 +43,9 @@ export default function BookCard({ book, cart, userQuota, addToCart }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/90" />
 
       <div className="relative z-10 p-4 flex flex-col justify-end h-full">
-        <h3 className="text-lg font-bold text-white">{book.title}</h3>
+        <h3 className="text-sm font-bold text-white">{book.title}</h3>
 
-        <p className="text-white/70">{book.author}</p>
+        <p className="text-white/70 text-sm ">{book.author}</p>
 
         <button
           disabled={isButtonDisabled}

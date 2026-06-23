@@ -3,11 +3,15 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import api from "../services/api";
 import libraryBg from "../assets/bg.jpg";
+import TestimonialsCarousel from "./TestimonialsCarousel";
+import FAQ from "./FAQ";
+import HomeMarche from "./HomeMarche";
+import HomeRole from "./HomeRole";
 
 export default function Home() {
+
   const { user } = useContext(AuthContext);
   const isConnected = !!user;
-
   const [randomBooks, setRandomBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -51,7 +55,6 @@ export default function Home() {
       try {
         setIsLoading(true);
         const response = await api.get("/books/random");
-        // On attend un tableau de 6 livres du backend
         setRandomBooks(response.data);
         setError(false);
       } catch (err) {
@@ -171,29 +174,45 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 md:py-32 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="font-satoshi text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Fonctionnalités principales
+      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 bg-slate-50/2">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <span className="text-[10px] font-semibold text-violet-400 uppercase tracking-widest">
+              Fonctionnalités
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 mb-3">
+              Tout ce dont vous avez besoin
             </h2>
-            <p className="font-manrope text-gray-600 text-base sm:text-lg max-w-2xl mx-auto px-2">
-              Une suite complète d'outils conçus pour les lecteurs modernes
+            <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
+              Une suite complète d'outils conçus pour les lecteurs modernes et
+              les gestionnaires exigeants
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="flex flex-col p-6 sm:p-8 rounded border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all duration-300 bg-white group"
+                className="group relative flex flex-col gap-4 p-6 rounded border border-slate-100     hover:bg-white transition-all duration-200"
               >
-                <h3 className="font-satoshi text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
+                {/* Numéro discret */}
+                <span className="text-[10px] font-black text-slate-900 group-hover:text-violet-500/50 transition-colors">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                {/* Titre */}
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-violet-300 transition-colors leading-snug">
                   {feature.title}
                 </h3>
-                <p className="font-manrope text-sm sm:text-base text-gray-600 leading-relaxed">
+
+                {/* Description */}
+                <p className="text-xs text-slate-700 leading-relaxed flex-1">
                   {feature.description}
                 </p>
+
+                {/* Ligne décorative au hover */}
+                <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-violet-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
               </div>
             ))}
           </div>
@@ -201,7 +220,7 @@ export default function Home() {
       </section>
 
       {/*  Section des livres aleatoires*/}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* En-tête de la section */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           {/* 1. Label discret en premier — contextualise */}
@@ -402,230 +421,39 @@ export default function Home() {
       </section>
 
       {/* Comment Ça Marche */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 md:py-32 bg-white">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-16 sm:mb-20">
-            <span className="text-[10px] font-semibold text-violet-500 uppercase tracking-widest">
-              Fonctionnement
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2">
-              Comment ça marche
-            </h2>
-          </div>
-
-          <div className="flex flex-col gap-16 sm:gap-24">
-            {/* Étape 01 — image gauche, texte droite */}
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-              {/* Image */}
-              <div className="w-full md:w-1/2 rounded overflow-hidden bg-slate-100 aspect-video flex items-center justify-center shrink-0">
-                <img
-                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80"
-                  alt="Créer un compte"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Texte */}
-              <div className="w-full md:w-1/2">
-                <span className="inline-block text-xs font-black text-violet-500 bg-violet-50 border border-violet-100 px-2.5 py-1 rounded mb-4 tracking-widest">
-                  ÉTAPE 01
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-3">
-                  Créer un compte
-                </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Inscrivez-vous en quelques secondes avec vos informations.
-                  Votre espace personnel est créé instantanément et sécurisé par
-                  jeton d'authentification.
-                </p>
-                <div className="mt-6">
-                  <a
-                    href="/registration"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold transition-all duration-200 active:scale-95"
-                  >
-                    S'inscrire gratuitement
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Séparateur */}
-            <div className="flex items-center gap-4">
-              <div className="flex-1 h-px bg-slate-100" />
-              <div className="w-1.5 h-1.5 rounded-full bg-violet-300" />
-              <div className="flex-1 h-px bg-slate-100" />
-            </div>
-
-            {/* Étape 02 — texte gauche, image droite */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16">
-              {/* Image */}
-              <div className="w-full md:w-1/2 rounded overflow-hidden bg-slate-100 aspect-video flex items-center justify-center shrink-0">
-                <img
-                  src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80"
-                  alt="Ajouter vos livres"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Texte */}
-              <div className="w-full md:w-1/2">
-                <span className="inline-block text-xs font-black text-pink-500 bg-pink-50 border border-pink-100 px-2.5 py-1 rounded mb-4 tracking-widest">
-                  ÉTAPE 02
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-3">
-                  Parcourez le catalogue
-                </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Explorez des milliers d'ouvrages classés par catégorie.
-                  Filtrez par auteur, genre ou disponibilité et ajoutez vos
-                  sélections à votre panier d'emprunt.
-                </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    Disponible immédiatement
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                    Réservation possible
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Séparateur */}
-            <div className="flex items-center gap-4">
-              <div className="flex-1 h-px bg-slate-100" />
-              <div className="w-1.5 h-1.5 rounded-full bg-pink-300" />
-              <div className="flex-1 h-px bg-slate-100" />
-            </div>
-
-            {/* Étape 03 — image gauche, texte droite */}
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
-              {/* Image */}
-              <div className="w-full md:w-1/2 rounded overflow-hidden bg-slate-100 aspect-video flex items-center justify-center shrink-0">
-                <img
-                  src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80"
-                  alt="Gérer et découvrir"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Texte */}
-              <div className="w-full md:w-1/2">
-                <span className="inline-block text-xs font-black text-violet-500 bg-violet-50 border border-violet-100 px-2.5 py-1 rounded mb-4 tracking-widest">
-                  ÉTAPE 03
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-3">
-                  Gérez vos emprunts
-                </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Suivez vos emprunts en temps réel depuis votre espace
-                  personnel. Consultez l'historique complet de vos lectures et
-                  gérez vos retours facilement.
-                </p>
-                <div className="mt-6 flex flex-col gap-2">
-                  {[
-                    "Suivi des dates de retour",
-                    "Historique complet",
-                    "Notifications de retard",
-                  ].map((feat) => (
-                    <div
-                      key={feat}
-                      className="flex items-center gap-2 text-xs text-slate-600 font-medium"
-                    >
-                      <svg
-                        className="w-3.5 h-3.5 text-violet-500 shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12.75l6 6 9-13.5"
-                        />
-                      </svg>
-                      {feat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-                  
+      <HomeMarche />
       {/* Le role de la lecture */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 bg-slate-950 overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            {/* SVG Vector — personnage qui lit */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center shrink-0"></div>
-
-            {/* Contenu texte */}
-            <div className="w-full lg:w-1/2">
-              <span className="text-[10px] font-semibold text-violet-400 uppercase tracking-widest">
-                Pourquoi lire ?
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight mt-2 mb-4">
-                La lecture change{" "}
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-                  tout.
-                </span>
-              </h2>
-              <p className="text-sm text-slate-400 leading-relaxed mb-10">
-                Chaque livre ouvert est une nouvelle perspective. BuchVault vous
-                donne accès à des milliers d'ouvrages pour nourrir votre
-                curiosité au quotidien.
-              </p>
-
-              <div className="flex flex-col gap-5"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <HomeRole />
+      <TestimonialsCarousel />
       {/* CTA Section */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 md:py-32 bg-gradient-to-r from-purple-600 to-red-900">
+      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 bg-slate-50 sm:py-24 md:py-32 ">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-satoshi text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+          <h2 className="text-2xl sm:text-2xl md:text-4xl  text-slate-900 mb-4 sm:mb-6">
             Prêt à découvrir votre prochain chef-d'œuvre ?
           </h2>
-          <p className="font-manrope text-base sm:text-lg text-purple-100 mb-8 max-w-2xl mx-auto px-2">
+          <p className="text-slate-500 text-purple-100 mb-8 max-w-2xl mx-auto px-2">
             Rejoignez des milliers de lecteurs qui utilisent bookVault pour
             transformer leur façon de lire et de découvrir les livres.
           </p>
           {!user ? (
             <Link
               to="/login"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded bg-white text-purple-600 font-satoshi font-semibold hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-600 text-sm sm:text-base"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200"
             >
               Créer un compte gratuit
             </Link>
           ) : (
             <Link
               to="/books"
-              className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 rounded bg-white text-purple-600 font-satoshi font-semibold hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-600 text-sm sm:text-base"
+              className="iinline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200"
             >
               Consultez notre catalogue
             </Link>
           )}
         </div>
       </section>
-      
+
+      <FAQ />
     </div>
   );
 }

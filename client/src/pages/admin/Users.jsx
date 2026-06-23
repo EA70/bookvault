@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import api from "../../services/api";
-
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -128,24 +127,39 @@ export default function Users() {
     const tableRows = history.map((item) => {
       let statusText = "EN COURS";
 
+      // Vérification si la date d'échéance est dépassée par rapport à l'heure actuelle
+      const isOverdue =
+        item.status === "emprunte" &&
+        item.due_at &&
+        new Date(item.due_at) < new Date();
+
       switch (item.status) {
         case "refuse":
           statusText = "REJETÉ";
           break;
+
         case "en_attente_remise":
           statusText = "DEMANDE DE PRÊT (En attente)";
           break;
+
         case "emprunte":
-          statusText = "EN COURS (Non rendu)";
+          if (isOverdue) {
+            statusText = "EN RETARD";
+          } else {
+            statusText = "EN COURS (Non rendu)";
+          }
           break;
+
         case "en_attente_retour":
           statusText = "RETOUR DEMANDÉ (En attente)";
           break;
+
         case "rendu":
           statusText = item.returned_at
-            ? `RENDU LE ${new Date(item.returned_at).toLocaleDateString("fr-FR")}`
+            ? `RENDU LE ${new Date(item.returned_at).toLocaleDateString("fr-FR").toUpperCase()}`
             : "RESTITUÉ";
           break;
+
         default:
           // Sécurité si un statut inconnu ou vide remonte
           statusText = item.status ? item.status.toUpperCase() : "INCONNU";
@@ -440,7 +454,10 @@ export default function Users() {
                       // 1. Logique d'affichage et de style calquée sur les vrais statuts de ta BDD
                       let statusLabel = "";
                       let statusStyle = "";
-
+                      const isOverdue =
+                        item.status === "emprunte" &&
+                        item.due_at &&
+                        new Date(item.due_at) < new Date();
                       switch (item.status) {
                         case "refuse":
                           statusLabel = "Refusé";
@@ -453,9 +470,15 @@ export default function Users() {
                             "bg-blue-50 text-blue-600 border-blue-200";
                           break;
                         case "emprunte":
-                          statusLabel = "En cours";
-                          statusStyle =
-                            "bg-amber-50 text-amber-700 border-amber-200";
+                          if (isOverdue) {
+                            statusLabel = "En retard";
+                            statusStyle =
+                              "bg-rose-50 text-rose-700 border-rose-300 font-bold border-l-4 border-l-rose-500 rounded-r rounded-l-none";
+                          } else {
+                            statusLabel = "En cours";
+                            statusStyle =
+                              "bg-amber-50 text-amber-700 border-amber-200";
+                          }
                           break;
                         case "en_attente_retour":
                           statusLabel = "Retour demandé";

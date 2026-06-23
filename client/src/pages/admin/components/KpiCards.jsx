@@ -20,7 +20,7 @@ export default function KpiCards({ kpis }) {
       bgIcon: "bg-amber-50",
       borderColor: "border-slate-200",
       trend: "livres en circulation",
-      path: "/admin/loans",  
+      path: "/putulu-admin/loans",  
     },
     {
       title: "Retours en retard",
@@ -30,7 +30,7 @@ export default function KpiCards({ kpis }) {
       borderColor: kpis.overdueReturns > 0 ? "border-rose-200" : "border-slate-200",
       isAlert: kpis.overdueReturns > 0,
       trend: kpis.overdueReturns > 0 ? "action requise" : "aucun retard",
-      path: "/admin/overdue",  
+      path: "/putulu-admin/overdue-returns",  
     },
     {
       title: "Étudiants inscrits",

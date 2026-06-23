@@ -84,16 +84,16 @@ const getDashboardChartsData = async (req, res) => {
       ORDER BY m.month ASC
     `);
 
-    // 🍩 REQUÊTE 2 : Répartition des livres par catégorie (Avec jointure sur la table categories)
+    //  REQUÊTE 2 : Répartition des livres par catégorie (Avec jointure sur la table categories)
     const categoryQuery = await pool.query(`
       SELECT 
         COALESCE(c.name, 'Non spécifié') AS category_name,
         COUNT(b.id) AS value
       FROM borrows b
       JOIN books bk ON b.book_id = bk.id
-      LEFT JOIN categories c ON bk.category_id = c.id -- 🚀 Jointure pour lier le category_id au "name" de la catégorie
+      LEFT JOIN categories c ON bk.category_id = c.id -- Jointure pour lier le category_id au "name" de la catégorie
       WHERE b.status IN ('emprunte', 'rendu', 'en_attente_retour')
-      GROUP BY c.name, bk.category_id -- 💡 Groupement obligatoire sur le nom et l'ID d'origine
+      GROUP BY c.name, bk.category_id --  Groupement obligatoire sur le nom et l'ID d'origine
       ORDER BY value DESC
       LIMIT 6
     `);
@@ -115,7 +115,7 @@ const getDashboardChartsData = async (req, res) => {
 
 const getDashboardActionLists = async (req, res) => {
   try {
-    // 🕒 LISTE 1 : Les 5 emprunts les plus récents
+    //  LISTE 1 : Les 5 emprunts les plus récents
     const recentLoansQuery = await pool.query(`
       SELECT 
         b.id,
@@ -130,7 +130,7 @@ const getDashboardActionLists = async (req, res) => {
       LIMIT 7
     `);
 
-    // 🚨 LISTE 2 : Les retours en retard (Urgent)
+    //  LISTE 2 : Les retours en retard (Urgent)
     // On calcule dynamiquement le nombre de jours de retard avec CURRENT_TIMESTAMP
     const overdueLoansQuery = await pool.query(`
       SELECT 
@@ -165,7 +165,7 @@ const getDashboardActionLists = async (req, res) => {
  *  */
 const getDashboardQuickActivity = async (req, res) => {
   try {
-    // 📚 1. Les 5 livres les plus empruntés de tous les temps (Top Tendances)
+    //  1. Les 5 livres les plus empruntés de tous les temps (Top Tendances)
     const topBooksQuery = await pool.query(`
       SELECT 
         bk.id,
@@ -180,7 +180,7 @@ const getDashboardQuickActivity = async (req, res) => {
       LIMIT 5
     `);
 
-    // 🎓 2. Les 5 derniers étudiants inscrits (Comptes récents)
+    //  2. Les 5 derniers étudiants inscrits (Comptes récents)
     const recentStudentsQuery = await pool.query(`
       SELECT 
         id,
@@ -289,7 +289,7 @@ const rejectReservation = async (req, res) => {
  */
 const getDashboardStockAlerts = async (req, res) => {
   try {
-    // 🚨 1. Livres en rupture totale de stock (Indisponibles pour les étudiants)
+    // 1. Livres en rupture totale de stock (Indisponibles pour les étudiants)
     const stockOutQuery = await pool.query(`
       SELECT 
         id,
@@ -302,7 +302,7 @@ const getDashboardStockAlerts = async (req, res) => {
       LIMIT 5
     `);
 
-    // ⚠️ 2. Alerte de Stock Critique (Livres très demandés qui n'ont plus qu'un seul exemplaire restant)
+    // 2. Alerte de Stock Critique (Livres très demandés qui n'ont plus qu'un seul exemplaire restant)
     const criticalStockQuery = await pool.query(`
       SELECT 
         id,
@@ -385,6 +385,85 @@ const getBorrowsHistory = async (req, res) => {
   }
 };
 
+
+
+/**
+ * Récupère tous les emprunts actifs ou en attente.
+ * Route : GET /api/loans/active
+ */
+const getAllActiveLoans = async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        b.id AS borrow_id,
+        u.id AS user_id,
+        u.first_name || ' ' || u.last_name AS student_name,
+        bk.id AS book_id,
+        bk.title AS book_title,
+        b.borrowed_at,
+        b.due_at,
+        b.return_requested_at,
+        b.status
+      FROM borrows b
+      JOIN users u ON b.user_id = u.id
+      JOIN books bk ON b.book_id = bk.id
+      WHERE b.status IN ('en_attente_remise', 'emprunte', 'en_attente_retour')
+      ORDER BY b.borrowed_at DESC
+    `;
+    
+    const { rows } = await pool.query(query);
+    
+    // 'res' est utilisé ici pour renvoyer les données au format JSON avec un statut 200 (OK)
+    return res.status(200).json(rows);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des emprunts actifs :", error);
+    
+    // 'res' renvoie une erreur 500 au client en cas de problème serveur
+    return res.status(500).json({ 
+      message: "Une erreur est survenue lors de la récupération des emprunts actifs." 
+    });
+  }
+};
+
+/**
+ * Récupère tous les emprunts en retard de restitution.
+ * Route : GET /api/loans/overdue
+ */
+const getAllOverdueLoans = async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        b.id AS borrow_id,
+        u.id AS user_id,
+        u.first_name || ' ' || u.last_name AS student_name,
+        bk.id AS book_id,
+        bk.title AS book_title,
+        b.borrowed_at,
+        b.due_at,
+        b.last_reminded_at,
+        EXTRACT(DAY FROM (CURRENT_TIMESTAMP - b.due_at)) AS days_overdue
+      FROM borrows b
+      JOIN users u ON b.user_id = u.id
+      JOIN books bk ON b.book_id = bk.id
+      WHERE b.status = 'emprunte' 
+        AND b.due_at < CURRENT_TIMESTAMP
+      ORDER BY days_overdue DESC
+    `;
+    
+    const { rows } = await pool.query(query);
+    
+    // 'res' renvoie la liste des retards au frontend
+    return res.status(200).json(rows);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des emprunts en retard :", error);
+    
+    return res.status(500).json({ 
+      message: "Une erreur est survenue lors de la récupération des emprunts en retard." 
+    });
+  }
+};
+
+
 module.exports = {
   alleUsers,
   getDashboardKPIs,
@@ -396,4 +475,6 @@ module.exports = {
   acceptReservation,
   rejectReservation,
   getDashboardStockAlerts,
+  getAllActiveLoans,
+  getAllOverdueLoans
 };

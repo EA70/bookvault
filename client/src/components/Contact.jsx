@@ -63,6 +63,25 @@ const infos = [
       </div>
  
 
+       <div className="relative overflow-hidden bg-white py-16 sm:py-24">
+
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute -top-24 -left-20 w-80 h-80 bg-purple-500 rounded-full blur-3xl" />
+          <div className="absolute top-40 right-10 w-96 h-96 bg-purple-100 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+ 
+          <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight max-w-2xl mx-auto leading-tight">
+            Contactez-<span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-red-600">nous</span> !
+          </h1>
+          <p className="mt-6 text-base  text-slate-600 max-w-3xl mx-auto leading-relaxed">
+            Vous avez une question, un problème technique ou une suggestion ? Notre équipe est là pour vous aider. Remplissez le formulaire ci-dessous et nous vous répondrons dans les 24h ouvrées.
+          </p>
+        </div>
+        
+      </div>
+
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
 
 
@@ -71,12 +90,7 @@ const infos = [
           <span className="text-[10px] font-semibold text-violet-400 uppercase tracking-widest">
             Support & Contact
           </span>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight mt-2 mb-3">
-            On est là pour{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-              vous aider
-            </span>
-          </h1>
+
           <p className="text-sm text-slate-400 max-w-lg leading-relaxed">
             Une question sur votre emprunt, un problème technique ou une suggestion ? Notre équipe vous répond sous 24h.
           </p>
@@ -177,7 +191,7 @@ const infos = [
                     <input
                       type="text"
                       required
-                      placeholder="John Doe"
+                      placeholder="Mando Elie"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full pl-9 pr-3 py-2.5 rounded  border border-slate-400 text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all"
