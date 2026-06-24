@@ -246,6 +246,7 @@ export default function Navbar() {
           <Link to="/apropos" className={mobileNavLinkClass("/apropos")}>
             <Info className="h-3.5 w-3.5 inline mr-2" /> À propos
           </Link>
+
           {isAuthenticated && (
             <Link to="/book" className={mobileNavLinkClass("/book")}>
               <Book className="h-3.5 w-3.5 inline mr-2" /> Books
@@ -259,6 +260,10 @@ export default function Navbar() {
               <LayoutDashboard className="h-3.5 w-3.5 inline mr-2" /> Dashboard
             </Link>
           )}
+          <Link to="/contact" className={mobileNavLinkClass("/contact")}>
+            <Phone className="h-3.5 w-3.5 inline mr-2" /> Contact
+          </Link>
+
 
           <div className="border-t border-slate-100 pt-3 mt-2">
             {isAuthenticated ? (

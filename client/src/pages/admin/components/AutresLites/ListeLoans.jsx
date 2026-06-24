@@ -89,13 +89,19 @@ export default function ListeLoans() {
       <div className="max-w-5xl mx-auto space-y-6">
         
         {/* En-tête de la page */}
-        <div>
-          <h1 className="text-xl font-black text-slate-900 tracking-tight mt-0.5">
-            Suivi des Flux Actifs
-          </h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-           Suivi en temps réel des emprunts et retours en cours, avec possibilité de filtrer et rechercher selon vos besoins.
-          </p>
+        <div className="flex justify-between gap-2">
+          <div >
+            <h1 className="text-xl font-black text-slate-900 tracking-tight mt-0.5">
+              Suivi des Flux Actifs
+            </h1>
+            <p className="text-xs text-slate-400 mt-0.5">
+            Suivi en temps réel des emprunts et retours en cours, avec possibilité de filtrer et rechercher selon vos besoins.
+            </p>
+          </div>
+          <div className="bg-purple-500 border border-purple-100 rounded px-3 py-2 text-center self-start sm:self-center">
+            <span className="block text-[10px] font-bold text-white uppercase tracking-wide">enregistrements</span>
+            <span className="text-xl font-black text-white">{loans.length}</span>
+          </div>
         </div>
 
         {/* Barre de Filtres et de Recherche */}

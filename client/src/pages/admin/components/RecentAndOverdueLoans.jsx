@@ -1,5 +1,6 @@
 import React from "react";
 import { Clock, ShieldAlert } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function RecentAndOverdueLoans({ actionLists, formatDateTime }) {
   // Dictionnaire interne pour styliser les badges de statut
@@ -14,12 +15,18 @@ export default function RecentAndOverdueLoans({ actionLists, formatDateTime }) {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
       
       {/* Tableau : Emprunts récents (2/3 de la largeur) */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5 flex flex-col gap-4 lg:col-span-2">
+      <div className="bg-white border border-slate-200 rounded shadow-sm p-5 flex flex-col gap-4 lg:col-span-2">
         <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
           <Clock className="w-8 h-8 text-slate-500" />
           <div>
             <h3 className="text-sm font-bold text-slate-800">Emprunts récents</h3>
             <p className="text-[10px] text-slate-400">Les 5 dernières actions d'emprunt enregistrées</p>
+          </div>
+
+          <div className="ml-auto text-[10px]  text-slate-400 font-semibold">
+            <Link to="/putulu-admin/loans" className="hover:text-slate-600 transition-colors">
+              Voir tous
+            </Link>
           </div>
         </div>
 
@@ -69,6 +76,13 @@ export default function RecentAndOverdueLoans({ actionLists, formatDateTime }) {
             <h3 className="text-sm font-bold text-slate-800">Retours en retard</h3>
             <p className="text-[10px] text-rose-500 font-semibold">Actions prioritaires requises</p>
           </div>
+
+          <div>
+            <Link to="/putulu-admin/overdue-returns" className="text-[10px] text-slate-400 font-semibold hover:text-slate-600 transition-colors">
+              Voir tous
+            </Link>
+          </div>
+
         </div>
 
         <div className="flex flex-col gap-3 overflow-y-auto max-h-[17.5rem] pr-1 custom-scrollbar">

@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
+
 export default function HomeMarche() {
   return (
     <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 md:py-32 bg-white">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 sm:mb-20">
           <span className="text-[10px] font-semibold text-violet-500 uppercase tracking-widest">
@@ -106,8 +109,8 @@ export default function HomeMarche() {
                 d'authentification.
               </p>
               <div className="mt-6">
-                <a
-                  href="/registration"
+                <Link
+                  to="/registration"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 text-white text-xs font-semibold transition-all duration-200 active:scale-95"
                 >
                   S'inscrire gratuitement
@@ -124,7 +127,7 @@ export default function HomeMarche() {
                       d="M13 7l5 5m0 0l-5 5m5-5H6"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

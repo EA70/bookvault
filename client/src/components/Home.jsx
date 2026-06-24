@@ -7,47 +7,16 @@ import TestimonialsCarousel from "./TestimonialsCarousel";
 import FAQ from "./FAQ";
 import HomeMarche from "./HomeMarche";
 import HomeRole from "./HomeRole";
+import HomeStat from "./HomeStat";
+import HomeFeat from "./HomeFeat";
 
 export default function Home() {
-
+  
   const { user } = useContext(AuthContext);
   const isConnected = !!user;
   const [randomBooks, setRandomBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-
-  const features = [
-    {
-      title: "Gestion Intelligente",
-      description:
-        "Organisez votre bibliothèque numérique avec un système de catalogage intuitif et performant.",
-    },
-    {
-      title: "Recherche Avancée",
-      description:
-        "Trouvez instantanément vos livres grâce à notre moteur de recherche optimisé et filtres précis.",
-    },
-    {
-      title: "Synchronisation Cloud",
-      description:
-        "Accédez à votre collection depuis n'importe quel appareil avec une synchronisation en temps réel.",
-    },
-    {
-      title: "Recommandations",
-      description:
-        "Découvrez de nouveaux livres basés sur vos préférences et votre historique de lecture.",
-    },
-    {
-      title: "Partage Social",
-      description:
-        "Partagez vos découvertes avec une communauté de lecteurs passionnés.",
-    },
-    {
-      title: "Statistiques Détaillées",
-      description:
-        "Suivez votre progression de lecture et analysez vos habitudes de consommation.",
-    },
-  ];
 
   //Recuperation des livres aleatoires
   useEffect(() => {
@@ -170,52 +139,6 @@ export default function Home() {
           <p className="mt-8 text-xs text-slate-400 font-medium">
             Réservation instantanée · Retours simplifiés
           </p>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 bg-slate-50/2">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <span className="text-[10px] font-semibold text-violet-400 uppercase tracking-widest">
-              Fonctionnalités
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 mb-3">
-              Tout ce dont vous avez besoin
-            </h2>
-            <p className="text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
-              Une suite complète d'outils conçus pour les lecteurs modernes et
-              les gestionnaires exigeants
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="group relative flex flex-col gap-4 p-6 rounded border border-slate-100     hover:bg-white transition-all duration-200"
-              >
-                {/* Numéro discret */}
-                <span className="text-[10px] font-black text-slate-900 group-hover:text-violet-500/50 transition-colors">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                {/* Titre */}
-                <h3 className="text-sm font-bold text-slate-900 group-hover:text-violet-300 transition-colors leading-snug">
-                  {feature.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-xs text-slate-700 leading-relaxed flex-1">
-                  {feature.description}
-                </p>
-
-                {/* Ligne décorative au hover */}
-                <div className="absolute bottom-0 left-6 right-6 h-px bg-gradient-to-r from-violet-500 to-pink-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -398,27 +321,11 @@ export default function Home() {
         )}
       </section>
 
+      {/* Features Section */}
+      <HomeFeat />
+
       {/* Stats Section */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 sm:py-24 md:py-32 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              { label: "Utilisateurs actifs", value: "100+" },
-              { label: "Livres catalogués", value: "500+" },
-              { label: "Taux de satisfaction", value: "98%" },
-            ].map((stat, index) => (
-              <div key={index} className="text-center px-2">
-                <p className="font-satoshi text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
-                  {stat.value}
-                </p>
-                <p className="font-manrope text-xs sm:text-sm md:text-base text-gray-600 font-medium">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeStat />
 
       {/* Comment Ça Marche */}
       <HomeMarche />
@@ -426,30 +333,120 @@ export default function Home() {
       <HomeRole />
       <TestimonialsCarousel />
       {/* CTA Section */}
-      <section className="px-4 sm:px-6 md:px-8 lg:px-12 py-16 bg-slate-50 sm:py-24 md:py-32 ">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-2xl md:text-4xl  text-slate-900 mb-4 sm:mb-6">
-            Prêt à découvrir votre prochain chef-d'œuvre ?
+      <section className="px-4 relative sm:px-6 md:px-8 lg:px-12 py-16 bg-slate-50 sm:py-24 md:py-32 overflow-hidden">
+
+        {/* Livre ouvert — décoratif centré en fond */}
+        <svg
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-[0.045] pointer-events-none select-none"
+          viewBox="0 0 300 200"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Page gauche */}
+          <path d="M150 30 Q100 25 20 40 L20 175 Q90 160 150 170 Z" fill="#7c3aed"/>
+          {/* Page droite */}
+          <path d="M150 30 Q200 25 280 40 L280 175 Q210 160 150 170 Z" fill="#6d28d9"/>
+          {/* Spine central */}
+          <path d="M150 28 L150 172" stroke="#4c1d95" strokeWidth="3"/>
+          {/* Lignes texte page gauche */}
+          <line x1="40" y1="65"  x2="138" y2="60"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
+          <line x1="40" y1="78"  x2="135" y2="73"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="40" y1="91"  x2="138" y2="86"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="40" y1="104" x2="130" y2="99"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="40" y1="117" x2="136" y2="112" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="40" y1="130" x2="125" y2="125" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="40" y1="143" x2="134" y2="138" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.25"/>
+          {/* Lignes texte page droite */}
+          <line x1="162" y1="60"  x2="258" y2="65"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.5"/>
+          <line x1="162" y1="73"  x2="255" y2="78"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="162" y1="86"  x2="258" y2="91"  stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="162" y1="99"  x2="250" y2="104" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="162" y1="112" x2="256" y2="117" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="162" y1="125" x2="245" y2="130" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.35"/>
+          <line x1="162" y1="138" x2="254" y2="143" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.25"/>
+          {/* Ombre sous le livre */}
+          <ellipse cx="150" cy="182" rx="110" ry="8" fill="#4c1d95" opacity="0.3"/>
+        </svg>
+
+        {/* Petits livres empilés à gauche */}
+        <svg
+          className="absolute -left-8 bottom-8 w-[180px] h-[180px] opacity-[0.04] pointer-events-none select-none -rotate-6"
+          viewBox="0 0 200 260"
+          fill="none"
+        >
+          <rect x="30" y="10" width="140" height="240" rx="6" fill="#db2777"/>
+          <rect x="30" y="10" width="18" height="240" rx="4" fill="#9d174d"/>
+          <rect x="62" y="50" width="90" height="6" rx="3" fill="#fff" opacity="0.6"/>
+          <rect x="62" y="66" width="70" height="6" rx="3" fill="#fff" opacity="0.4"/>
+          <rect x="62" y="100" width="88" height="4" rx="2" fill="#fff" opacity="0.3"/>
+          <rect x="62" y="112" width="80" height="4" rx="2" fill="#fff" opacity="0.3"/>
+          <rect x="166" y="14" width="6" height="232" rx="2" fill="#e2e8f0" opacity="0.5"/>
+        </svg>
+
+        {/* Petit livre à droite en haut */}
+        <svg
+          className="absolute -right-6 top-8 w-[140px] h-[140px] opacity-[0.04] pointer-events-none select-none rotate-12"
+          viewBox="0 0 200 260"
+          fill="none"
+        >
+          <rect x="30" y="10" width="140" height="240" rx="6" fill="#7c3aed"/>
+          <rect x="30" y="10" width="18" height="240" rx="4" fill="#5b21b6"/>
+          <rect x="62" y="50" width="90" height="6" rx="3" fill="#fff" opacity="0.6"/>
+          <rect x="62" y="66" width="70" height="6" rx="3" fill="#fff" opacity="0.4"/>
+          <rect x="62" y="100" width="88" height="4" rx="2" fill="#fff" opacity="0.3"/>
+          <rect x="62" y="112" width="80" height="4" rx="2" fill="#fff" opacity="0.3"/>
+          <rect x="166" y="14" width="6" height="232" rx="2" fill="#e2e8f0" opacity="0.5"/>
+        </svg>
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+
+          <span className="text-[10px] font-semibold text-violet-500 uppercase tracking-widest">
+            Rejoignez-nous
+          </span>
+
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 mb-4">
+            Prêt à découvrir votre prochain{" "}
+            <span className="bg-gradient-to-r from-violet-600 to-pink-500 bg-clip-text text-transparent">
+              chef-d'œuvre ?
+            </span>
           </h2>
-          <p className="text-slate-500 text-purple-100 mb-8 max-w-2xl mx-auto px-2">
-            Rejoignez des milliers de lecteurs qui utilisent bookVault pour
-            transformer leur façon de lire et de découvrir les livres.
+
+          <p className="text-sm text-slate-500 mb-8 max-w-xl mx-auto leading-relaxed">
+            Rejoignez des milliers de lecteurs qui utilisent BuchVault pour transformer leur façon de lire et de découvrir les livres.
           </p>
-          {!user ? (
-            <Link
-              to="/login"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200"
-            >
-              Créer un compte gratuit
-            </Link>
-          ) : (
-            <Link
-              to="/books"
-              className="iinline-flex items-center gap-2 px-5 py-2.5 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200"
-            >
-              Consultez notre catalogue
-            </Link>
-          )}
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            {!user ? (
+              <>
+                <Link
+                  to="/registration"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200 shadow-sm shadow-violet-200"
+                >
+                  Créer un compte gratuit
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+                <Link
+                  to="/login"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded border border-slate-200 bg-white text-slate-700 text-xs font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                >
+                  Se connecter
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/book"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded bg-violet-600 hover:bg-violet-500 active:scale-95 text-white text-xs font-semibold transition-all duration-200 shadow-sm shadow-violet-200"
+              >
+                Consulter le catalogue
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            )}
+          </div>
+
         </div>
       </section>
 

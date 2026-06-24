@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext"; // Ajuste le chemin selon ton architecture
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const { user, loading } = useContext(AuthContext);
@@ -25,37 +26,44 @@ export default function Footer() {
                 La plateforme définitive pour les amoureux de livres.
               </p>
             </div>
+
             <div>
               <h4 className="font-geist text-white font-semibold mb-4">
-                Produit
+                Liens utiles
               </h4>
               <ul className="space-y-2 text-sm font-inter">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Fonctionnalités
-                  </a>
+                  <Link to="/apropos" className="hover:text-white transition-colors">
+                    À propos
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Prix
-                  </a>
+                  <Link to="/contact" className="hover:text-white transition-colors">
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="hover:text-white transition-colors">
+                    Home
+                  </Link>
                 </li>
               </ul>
             </div>
+
             <div>
               <h4 className="font-geist text-white font-semibold mb-4">
                 Ressources
               </h4>
               <ul className="space-y-2 text-sm font-inter">
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link to="/documentation" className="hover:text-white transition-colors">
                     Documentation
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <Link to="/support" className="hover:text-white transition-colors">
                     Support
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -76,6 +84,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
+            
           </div>
           <div className="border-t border-gray-800 pt-8">
             <p className="font-manrope text-center text-sm">
