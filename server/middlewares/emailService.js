@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
 
 const { Resend } = require('resend');
-
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 
@@ -18,13 +16,6 @@ const transporter = nodemailer.createTransport({
 });
 
 
-
-await resend.emails.send({
-  from: 'onboarding@resend.dev', // ← fonctionne sans domaine perso
-  to: user.email,
-  subject: 'Confirmez votre email',
-  html: `<p>Cliquez sur ce lien pour activer votre compte : <a href="${lienConfirmation}">Activer</a></p>`
-});
 
 /**
  * Fonction pour envoyer le mail de validation à l'étudiant : dev avec nodemailer, prod avec Resend
