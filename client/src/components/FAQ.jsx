@@ -143,7 +143,7 @@ export default function FAQ() {
         </div>
 
         {/* CTA bas */}
-        <div className="mt-10 text-center p-6 bg-slate-50 border border-slate-200 rounded">
+        <div className="mt-10 text-center p-6 rounded">
           <p className="text-sm font-semibold text-slate-700 mb-1">
             Vous n'avez pas trouvé votre réponse ?
           </p>

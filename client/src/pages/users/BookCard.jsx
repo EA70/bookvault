@@ -45,7 +45,8 @@ export default function BookCard({ book, cart, userQuota, addToCart }) {
       <div className="relative z-10 p-4 flex flex-col justify-end h-full">
         <h3 className="text-sm font-bold text-white">{book.title}</h3>
 
-        <p className="text-white/70 text-sm ">{book.author}</p>
+        <p className="text-white/70 text-sm my-2">{book.description}</p>
+        <p className="text-white font-semibold text-sm ">{book.author}</p>
 
         <button
           disabled={isButtonDisabled}

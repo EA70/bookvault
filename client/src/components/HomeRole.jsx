@@ -328,12 +328,12 @@ export default function HomeRole() {
                 {
                   value: "2×",
                   label: "plus de vocabulaire en 6 mois de lecture",
-                  color: "text-pink-400",
+                  color: "text-violet-400",
                 },
                 {
                   value: "15 ans",
                   label: "de vie supplémentaires selon certaines études",
-                  color: "text-amber-400",
+                  color: "text-violet-400",
                 },
               ].map((s) => (
                 <div
@@ -379,22 +379,22 @@ export default function HomeRole() {
                   number: "02",
                   title: "Enrichit le vocabulaire",
                   desc: "Chaque livre introduit de nouveaux mots et structures de pensée qui améliorent votre communication.",
-                  accent: "bg-pink-500",
-                  text: "text-pink-400",
+                  accent: "bg-violet-500",
+                  text: "text-violet-400",
                 },
                 {
                   number: "03",
                   title: "Réduit le stress",
                   desc: "6 minutes de lecture suffisent à réduire le stress de 68%. Un refuge accessible partout, à tout moment.",
-                  accent: "bg-amber-500",
-                  text: "text-amber-400",
+                  accent: "bg-violet-500",
+                  text: "text-violet-400",
                 },
                 {
                   number: "04",
                   title: "Ouvre l'esprit",
                   desc: "Voyager dans d'autres cultures développe l'empathie et la compréhension du monde qui nous entoure.",
-                  accent: "bg-emerald-500",
-                  text: "text-emerald-400",
+                  accent: "bg-violet-500",
+                  text: "text-violet-400",
                 },
               ].map((item) => (
                 <div

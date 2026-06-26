@@ -95,8 +95,8 @@ export default function StudentLoans() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 p-4 sm:p-8 font-manrope">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="min-h-screen  p-4 sm:p-8 font-manrope">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* LISTE DES EMPRUNTS */}
         <div className="lg:col-span-2">
           <h1 className="text-2xl font-bold text-slate-900 mb-2">

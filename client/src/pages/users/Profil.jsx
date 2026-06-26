@@ -102,14 +102,14 @@ export default function Profil() {
               <div className="mt-5 w-full space-y-2">
                 <button
                   onClick={() => navigate("/my-loans")}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 text-xs font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-slate-200 bg-slate-50 text-slate-700 text-xs font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all duration-200"
                 >
                   <BookCopy className="h-3.5 w-3.5 text-slate-500" />
                   Mes emprunts
                 </button>
                 <button
                   onClick={() => navigate("/my-loans")}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 text-xs font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-slate-200 bg-slate-50 text-slate-700 text-xs font-semibold hover:bg-slate-100 hover:border-slate-300 transition-all duration-200"
                 >
                   <BookCopy className="h-3.5 w-3.5 text-slate-500" />
                   Historique
@@ -118,7 +118,7 @@ export default function Profil() {
                 {isAdmin && (
                   <button
                     onClick={() => navigate("/putulu-admin")}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-amber-200 bg-amber-50 text-amber-700 text-xs font-semibold hover:bg-amber-100 transition-all duration-200"
+                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded border border-amber-200 bg-amber-50 text-amber-700 text-xs font-semibold hover:bg-amber-100 transition-all duration-200"
                   >
                     <Shield className="h-3.5 w-3.5" />
                     Panel d'administration
