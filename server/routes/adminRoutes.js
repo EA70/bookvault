@@ -63,7 +63,6 @@ router.put("/dashboard/pending/:id/reject", verifyAdmin, rejectReservation);
 router.get("/dashboard/stock-alerts", verifyAdmin, getDashboardStockAlerts);
 
 
-
 /**
  *  route des t
  */
