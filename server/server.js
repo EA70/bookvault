@@ -6,8 +6,7 @@ const app = express();
 
 
 const allowedOrigins = [
-  "http://localhost:5174", "https://bookvault-two.vercel.app/",
-  process.env.CLIENT_URL
+  "http://localhost:5174", "https://bookvault-two.vercel.app"
 ].filter(Boolean);
 
 app.use(cors({
